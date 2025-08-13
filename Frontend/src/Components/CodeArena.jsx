@@ -205,22 +205,19 @@ export default function CodeArena() {
       </section>
 
       {/* Register */}
-      <section
-        id="register"
-        className="py-5 bg-color register-section text-center"
-      >
+      <div id="register" className="text-dark py-5 bg-color text-center">
+        {" "}
         <div className="container">
-          <h3 className="mb-3">Ready to compete?</h3>
+          <h4 className="mb-3">Ready to compete?</h4>
           <p className="mb-4">
-            Form your team (2–4 members), pick a problem, and register. Limited
+            Form your team (3–4 members), pick a problem, and register. Limited
             seats — first come, first served.
           </p>
         </div>
-      </section>
-      <div className="container mt-5 border p-4 form-container centered ">
-        <Form />
+        <div className="container mt-5 border p-4 form-container text-left ">
+          <Form />
+        </div>
       </div>
-
       {/* Footer */}
       <footer id="contact" className="py-5">
         <div className="container text-center">

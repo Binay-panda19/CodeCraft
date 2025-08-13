@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaUpload } from "react-icons/fa";
 
 export default function Form() {
   const [members, setMembers] = useState([
@@ -10,42 +11,67 @@ export default function Form() {
       team: "",
       members: 4,
       memberList: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
-      payment: false,
+      payment: null,
     },
   ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {
-      leaderName: e.target.leaderName.value,
-      email: e.target.email.value,
-      contact: e.target.contact.value,
-      college: e.target.College.value,
-      team: e.target.team.value,
-      members: e.target.members.value,
-      memberList: Array.from(
-        { length: Number(e.target.members.value) },
-        (_, i) => ({
-          name: e.target[`member${i + 1}`].value,
-        })
-      ),
-      // Assuming payment is a file input
-      // You might want to handle file uploads differently in a real application
-      // Here we just log the file object
-      //send this to a server or handle it as needed
 
-      payment: e.target.fileUpload.files[0],
-    };
-    console.log("Form submitted:", formData);
-    // Here you can handle the form submission, e.g., send data to a server
-    alert("Form submitted successfully!");
-    e.target.reset(); // Reset the form after submission
-    setMembers(""); // Reset the members state
+    const formData = new FormData();
+    formData.append("leaderName", e.target.leaderName.value);
+    formData.append("email", e.target.email.value);
+    formData.append("contact", e.target.contact.value);
+    formData.append("college", e.target.College.value);
+    formData.append("team", e.target.team.value);
+    formData.append("members", e.target.members.value);
+
+    // Add member list as JSON
+    const memberList = Array.from(
+      { length: Number(e.target.members.value) },
+      (_, i) => ({
+        name: e.target[`member${i + 1}`].value,
+      })
+    );
+    formData.append("memberList", JSON.stringify(memberList));
+
+    // File input
+    const paymentFile = e.target.fileUpload.files[0];
+    if (paymentFile) {
+      formData.append("payment", paymentFile);
+    }
+
+    // Send to backend
+    fetch("/api/register", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Form submitted:", data);
+        alert("Form submitted successfully!");
+      })
+      .catch((err) => console.error("Error:", err));
+
+    // Reset form and state
+    e.target.reset();
+    setMembers([
+      {
+        name: "",
+        email: "",
+        contact: "",
+        college: "",
+        team: "",
+        members: 4,
+        memberList: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
+        payment: null,
+      },
+    ]);
   };
 
   return (
     <div>
-      <h3 className="bold large text-centre"> Register!!</h3>
+      {/* <h3 className="bold large text-centre"> Register!!</h3> */}
       <div className="container mt-5 border p-4 form-container">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -71,7 +97,7 @@ export default function Form() {
           <div className="form-group">
             <label htmlFor="email">Contact No.</label>
             <input
-              type="contact"
+              type="Number"
               className="form-control"
               id="contact"
               placeholder="Enter your contact number"
@@ -135,30 +161,43 @@ export default function Form() {
                 />
               </div>
             ))}
-          <img
-            src="C:\Users\LENOVO\OneDrive\Desktop\CLASSROOM\CodeCraft\CodeCraft\Frontend\public\images\512px-Qr-1.svg.webp"
-            alt="QR Code"
-            className="img-fluid mb-3"
-          />
+          <br></br>
+          <br></br>
           <p>
-            Scan the QR code to join the WhatsApp group for CodeArena updates.
+            Payment : <b>Rs 150.</b>
           </p>
-          <p>Upload the screenshot of the payment for verification</p>
+          <div className="form-group mt-3">
+            <label htmlFor="fileUpload" className="form-label fw-bold">
+              <FaUpload className="me-2 text-primary" size={20} />
+              Upload Payment Screenshot for verification
+            </label>
 
-          <div className="form-group">
-            <label htmlFor="fileUpload"></label>
-            &nbsp;
             <input
               type="file"
-              className="form-control-file"
+              className="form-control"
               id="fileUpload"
               accept=".pdf,.jpg,.jpeg,.png"
               required
             />
+            <small className="form-text text-muted">
+              <p>
+                format: TeamName.jpg/pdf/png &nbsp;(Accepted formats: PDF, JPG,
+                PNG)
+              </p>
+            </small>
           </div>
-          <button type="submit" className="btn btn-primary mt-3">
-            Submit
-          </button>
+          <div className="form-text text-muted">
+            <p>
+              Note: Please ensure all details are correct before submitting. By
+              submitting this form, you agree to the terms and conditions of the
+              event.
+            </p>
+          </div>
+          <div className="text-center">
+            <button type="submit" className="btn btn-dark mt-3 ">
+              Submit
+            </button>
+          </div>
         </form>
       </div>
     </div>
