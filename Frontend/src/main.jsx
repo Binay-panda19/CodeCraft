@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import CodeArena from "./Components/CodeArena.jsx";
+import Form from "./Components/Form.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

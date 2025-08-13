@@ -1,37 +1,38 @@
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Form from "./Form";
 
 export default function CodeArena() {
-  useEffect(() => {
-    gsap.from(".hero-title", {
-      duration: 1,
-      x: -100,
-      opacity: 0,
-      ease: "power3.out",
-    });
-    gsap.from(".hero-subtitle", {
-      duration: 1,
-      x: 100,
-      opacity: 0,
-      ease: "power3.out",
-      delay: 0.3,
-    });
-    gsap.from(".hero-desc", {
-      duration: 1,
-      y: 50,
-      opacity: 0,
-      ease: "power3.out",
-      delay: 0.6,
-    });
-    gsap.from(".hero-btn", {
-      duration: 0.8,
-      scale: 0,
-      opacity: 0,
-      ease: "back.out(1.7)",
-      delay: 1,
-    });
-  }, []);
+  // useEffect(() => {
+  //   gsap.from(".hero-title", {
+  //     duration: 1,
+  //     x: -100,
+  //     opacity: 0,
+  //     ease: "power3.out",
+  //   });
+  //   gsap.from(".hero-subtitle", {
+  //     duration: 1,
+  //     x: 100,
+  //     opacity: 0,
+  //     ease: "power3.out",
+  //     delay: 0.3,
+  //   });
+  //   gsap.from(".hero-desc", {
+  //     duration: 1,
+  //     y: 50,
+  //     opacity: 0,
+  //     ease: "power3.out",
+  //     delay: 0.6,
+  //   });
+  //   gsap.from(".hero-btn", {
+  //     duration: 0.8,
+  //     scale: 0,
+  //     opacity: 0,
+  //     ease: "back.out(1.7)",
+  //     delay: 1,
+  //   });
+  // }, []);
 
   return (
     <>
@@ -93,7 +94,7 @@ export default function CodeArena() {
       </nav>
 
       {/* Hero Section */}
-      <section className="hero-section bg-color text-light">
+      <section className="hero-section bg-color text-bold">
         <div className="container text-center">
           <h1 className="hero-title">CodeArena 3.0</h1>
           <h2 className="hero-subtitle">The Ultimate Coding Showdown</h2>
@@ -214,16 +215,11 @@ export default function CodeArena() {
             Form your team (2–4 members), pick a problem, and register. Limited
             seats — first come, first served.
           </p>
-          <a
-            className="btn btn-lg btn-light px-4"
-            href="#"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Register
-          </a>
         </div>
       </section>
+      <div className="container mt-5 border p-4 form-container centered ">
+        <Form />
+      </div>
 
       {/* Footer */}
       <footer id="contact" className="py-5">
